@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<?xml-model relpath="../../xml-model/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>wlr716_udp</name>
+  <version>0.0.1</version>
+  <description>WLR716 Lidar UDP driver</description>
+  <maintainer email="xufeng.gao1993@gmail.com">Gao Xufeng</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>ament_index_cpp</depend>
+  <depend>boost</depend>
+  <depend>libboost-dev</depend>
+  <depend>sensor_msgs</depend>
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+     <build_type>ament_cmake</build_type>
+  </export>
+</package>
