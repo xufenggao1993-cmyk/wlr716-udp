@@ -43,8 +43,7 @@ namespace wlr
 {
 
 Protocol::Protocol(UDPTrans *trans)
-: Node("frontlidar_pub_node"),
-  trans_(trans)
+  : trans_(trans)
   {
     memset(&m_sdata, 0, sizeof(m_sdata));
     pre_fidx = 0;

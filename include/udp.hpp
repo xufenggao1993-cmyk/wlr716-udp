@@ -63,9 +63,9 @@ public:
   /**
    * @brief Constructor for wlr::Lidar
    */
-  UDPTrans();
+  UDPTrans(const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
   /**
-   * @brief Destructor for wlr::Lidar
+    UDPTrans(const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
    */
   ~UDPTrans();
 
@@ -74,7 +74,7 @@ public:
 
 private:
 
-
+  void init_param(void);
   void init_scan(void);
   ip::udp::socket* sock(io_service *srv, int port);
   int send(ip::udp::socket *sock, unsigned char *buffer, int size);
@@ -88,6 +88,8 @@ private:
   void publish(void);
   void cv_notify(void);
   sensor_msgs::msg::LaserScan* get_scan_data(void);
+
+  std::string ip_addr_;
 
   std::cv_status wait_until(int ms);
   void set_freq(float freq);

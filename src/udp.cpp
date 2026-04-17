@@ -36,12 +36,13 @@ namespace wlr
 #define CMD_PORT  6050
 #define DATA_PORT 6060
 
-UDPTrans::UDPTrans()
-: Node("frontlidar_ctrl_node"),
+UDPTrans::UDPTrans(const rclcpp::NodeOptions & options)
+: Node("frontlidar_ctrl_node", options),
   freq_(20.0)
 {
   setup_signal();
   /* Must before Protocol() constructor */
+  init_param();
   init_scan();
   Protocol *proto = new Protocol(this);
   io_service *srv = new io_service();
@@ -181,6 +182,19 @@ UDPTrans::monitor(ip::udp::socket *sock)
 }
 
 void
+UDPTrans::init_param(void)
+{
+  this->declare_parameter<string>("LidarIPAddress", "192.168.0.2");
+  try{
+    ip_addr_ = this->get_parameter("LidarIPAddress").as_string();
+  }
+  catch (const rclcpp::ParameterTypeException &e) {
+    RCLCPP_ERROR(get_logger(), "Failed to get parameter LidarIPAddress: %s", e.what());
+    ip_addr_ = "192.168.0.2";
+  }
+}
+
+void
 UDPTrans::init_scan(void)
 {
   laser_msg_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>("/frontlidar", 10);
@@ -311,7 +325,7 @@ UDPTrans::send(ip::udp::socket *sock, unsigned char *buffer, int size)
 {
   int res = -1;
   ip::udp::endpoint rmt_ep;
-  rmt_ep.address(ip::address::from_string("192.168.0.2"));
+  rmt_ep.address(ip::address::from_string(ip_addr_));
   rmt_ep.port(CMD_PORT);
 
   try {

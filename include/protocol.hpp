@@ -54,7 +54,7 @@ namespace wlr
   } DataCache;
 
   class UDPTrans;
-  class Protocol : public rclcpp::Node
+  class Protocol
   {
   public:
     Protocol(UDPTrans *trans);
